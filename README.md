@@ -24,11 +24,11 @@ $ cd k8s-jw-scaler
    ```bash
    Client Version: version.Info{Major:"1", Minor:"24", GitVersion:"v1.24.3", GitCommit:"aef86a93758dc3cb2c658dd9657ab4ad4afc21cb", GitTreeState:"clean", BuildDate:"2022-07-13T14:30:46Z", GoVersion:"go1.18.3", Compiler:"gc", Platform:"darwin/amd64"}
    ```
-- **kind** clusters deployed using [tf-jw-scaler](git@github.com:muawiakh/tf-jw-scaler.git)
+- **kind** clusters deployed using [tf-jw-scaler](https://github.com/muawiakh/tf-jw-scaler)
 
 ## Deploy nginx ingress controller
 
-After you have your kind cluster deployed, using [tf-jw-scaler](git@github.com:muawiakh/tf-jw-scaler.git). 
+After you have your kind cluster deployed, using [tf-jw-scaler](https://github.com/muawiakh/tf-jw-scalert). 
 
 ```bash
 $ kubectl config get-contexts
@@ -81,4 +81,25 @@ $ kubectl --context kind-app-k8s-cluster wait --namespace jw-scaler \
    --for=condition=ready pod \
    --selector=app=jw-scaler \
    --timeout=90s
+```
+
+## Verify deployments
+
+### Minio
+
+```bash
+$ kubectl --context kind-infra-k8s-cluster port-forward pod/minio 9000 9090 -n minio-dev
+# Check in your browser and login with minioadmin/minioadmin
+
+$ curl localhost:8080/minio/health/live
+```
+
+### jw-scaler
+
+```bash
+$ curl -v localhost:8080/jw-scaler
+
+# Browser
+
+$ http://localhost:8081/jw-scaler/<s3-bucket>/posters/<movie-name>.jpeg
 ```
