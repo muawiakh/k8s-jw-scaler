@@ -9,6 +9,12 @@ This repository contains Kubernetes manifests to deploy:
 
 We might need to deploy an ingress, evolve into a helm chart or use kustomize based on the time constraints(~2 hours)
 
+## Task workflow
+
+- Deploy Kubernetes clusters with local registry. [tf-jw-scaler](https://github.com/muawiakh/tf-jw-scaler)
+- Build and push jw-scaler to local docker registry. [go-jw-scaler](https://github.com/muawiakh/go-jw-scaler)
+- Deploy k8s resources: nginx controller, minio, jw-scaler. [k8s-jw-scaler](https://github.com/muawiakh/k8s-jw-scaler)
+
 
 ## Clone the project
 
