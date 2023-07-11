@@ -1,0 +1,48 @@
+# Deploys a new Namespace for the jw-scaler app
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jw-scaler # Change this value if you want a different namespace name
+  labels:
+    name: jw-scaler # Change this value to match metadata.name
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jw-scaler-app
+  namespace: jw-scaler
+  labels:
+    app: jw-scaler-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jw-scaler-app
+  template:
+    metadata:
+      labels:
+        app: jw-scaler-app
+    spec:
+      containers:
+        - name: jw-scaler
+          image: localhost:5001/jw-scaler:latest
+          ports:
+            - containerPort: 8080
+          # TODO: if you get to the helm chart please parametrize
+          # TODO: No resource limits etc as well or some script magic
+          env:
+            - name: MINIO_ENDPOINT
+              value: infra-k8s-cluster-control-plane # << change if you changed one of the cluster names >>
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: jw-scaler-service
+  namespace: jw-scaler
+spec:
+  selector:
+    app: jw-scaler-app
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
