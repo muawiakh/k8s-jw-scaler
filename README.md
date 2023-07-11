@@ -85,7 +85,7 @@ $ kubectl --context kind-app-k8s-cluster apply -f jw-scaler/jw-scaler.v1.yaml
 # wait for deployment
 $ kubectl --context kind-app-k8s-cluster wait --namespace jw-scaler \
    --for=condition=ready pod \
-   --selector=app=jw-scaler \
+   --selector=app=jw-scaler-app \
    --timeout=90s
 ```
 
@@ -95,17 +95,22 @@ $ kubectl --context kind-app-k8s-cluster wait --namespace jw-scaler \
 
 ```bash
 $ kubectl --context kind-infra-k8s-cluster port-forward pod/minio 9000 9090 -n minio-dev
-# Check in your browser and login with minioadmin/minioadmin
+# Check localhost:9090 your browser and login with minioadmin/minioadmin
 
-$ curl localhost:8080/minio/health/live
+$ curl -v localhost:8080/minio/health/live
+# should return 200
 ```
 
 ### jw-scaler
 
 ```bash
-$ curl -v localhost:8080/jw-scaler
+# b
+$ curl localhost:8081/jw-scaler
+# Welcome to the jw-scaler object storage!
 
-# Browser
+# Browser or curl
 
-$ http://localhost:8081/jw-scaler/<s3-bucket>/posters/<movie-name>.jpeg
+$ url http://localhost:8081/jw-scaler/jw-object-storage/posters/frenchdispatch.jpeg -o frenchdispatch.jpeg
+
+$ http://localhost:8081/jw-scaler/jw-object-storage/posters/frenchdispatch.jpeg
 ```
