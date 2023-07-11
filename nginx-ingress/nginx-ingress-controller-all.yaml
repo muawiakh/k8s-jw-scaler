@@ -1,5 +1,5 @@
-# This filed is pulled from using the guide: https://kind.sigs.k8s.io/docs/user/ingress/
-# nginx controller deployed from: https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+# This file is referenced from: https://kind.sigs.k8s.io/docs/user/ingress/
+# https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
